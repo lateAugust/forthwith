@@ -1,6 +1,9 @@
 <script>
+// import paiUser from '@/api/user';
 export default {
+  onLoad() {},
   onLaunch: function () {
+    this.$store.dispatch('getStorageUser');
     console.log('App Launch');
   },
   onShow: function () {
