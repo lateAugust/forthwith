@@ -1,15 +1,71 @@
 {
   "pages": [
     {
+      "path": "pages/messages/list/list",
+      "style": {
+        "navigationBarTitleText": "消息列表"
+      }
+    },
+    {
+      "path": "pages/contacter/list/list",
+      "style": {
+        "navigationBarTitleText": "联系人"
+      }
+    },
+    {
+      "path": "pages/ucenter/login/login",
+      "style": {
+        "navigationBarTitleText": "登录"
+      }
+    },
+    {
+      "path": "pages/ucenter/index/index",
+      "style": {
+        "navigationBarTitleText": "用户中心"
+      }
+    },
+    {
+      "path": "pages/ucenter/register/register",
+      "style": {
+        "navigationBarTitleText": "注册"
+      }
+    },
+    {
       "path": "pages/home/index/index",
       "style": {
         "navigationBarTitleText": ""
       }
     }
   ],
+  "tabBar": {
+    "color": "#000000",
+    "selectedColor": "#2F85FC",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/messages/list/list",
+        "iconPath": "static/tablist/message.png",
+        "selectedIconPath": "static/tablist/message-active.png",
+        "text": "消息"
+      },
+      {
+        "pagePath": "pages/contacter/list/list",
+        "iconPath": "static/tablist/book.png",
+        "selectedIconPath": "static/tablist/book-active.png",
+        "text": "通讯录"
+      },
+      {
+        "pagePath": "pages/ucenter/index/index",
+        "iconPath": "static/tablist/me.png",
+        "selectedIconPath": "static/tablist/me-active.png",
+        "text": "我的"
+      }
+    ]
+  },
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
+    "navigationBarTitleText": "晚霞的聊天工具",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   }
