@@ -1,0 +1,20 @@
+.show-arrow {
+  position: relative;
+  padding-right: 90rpx;
+}
+.show-arrow:before {
+  position: absolute;
+  top: 0;
+  right: 30upx;
+  bottom: 0;
+  display: block;
+  margin: auto;
+  width: 30upx;
+  height: 30upx;
+  color: #8799a3;
+  content: '\e6a3';
+  text-align: center;
+  font-size: 34upx;
+  font-family: cuIcon;
+  line-height: 30upx;
+}
