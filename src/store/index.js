@@ -17,7 +17,7 @@ export default new Vuex.Store({
       state.token = token;
       uni.setStorage({ key: 'user', data: { token, userInfo } });
     },
-    loginOut(state) {
+    logOut(state) {
       state.userInfo = {};
       state.isLogin = false;
       state.token = '';
