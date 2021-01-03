@@ -17,6 +17,10 @@ export default new Vuex.Store({
       state.token = token;
       uni.setStorage({ key: 'user', data: { token, userInfo } });
     },
+    setUserInfo(state, userInfo) {
+      state.userInfo = userInfo;
+      uni.setStorage({ key: 'user', data: { token: state.token, userInfo } });
+    },
     logOut(state) {
       state.userInfo = {};
       state.isLogin = false;

@@ -31,6 +31,12 @@
       }
     },
     {
+      "path": "pages/ucenter/userinfo/userinfo",
+      "style": {
+        "navigationBarTitleText": "修改资料"
+      }
+    },
+    {
       "path": "pages/home/index/index",
       "style": {
         "navigationBarTitleText": ""
