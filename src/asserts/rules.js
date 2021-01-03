@@ -4,6 +4,9 @@ const RULES = {
     username: '用户名是必须的',
     password: '密码是必须的',
     confirm_password: '确认密码是必须的'
+  },
+  userInfo: {
+    username: '用户名是必须的'
   }
 };
 

@@ -6,5 +6,8 @@ export default {
   },
   register(data) {
     return http('/users/register', data, 'post');
+  },
+  setUserInfo(data) {
+    return http('/users/info', data, 'put');
   }
 };
