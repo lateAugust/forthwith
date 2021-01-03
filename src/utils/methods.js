@@ -67,7 +67,16 @@ function typeOf(v) {
   return dataType[Object.prototype.toString.call(v)];
 }
 
+function delNullProps(object) {
+  object = JSON.parse(JSON.stringify(object));
+  for (let [key, val] of Object.entries(object)) {
+    if (typeOf(val) === 'null') Reflect.deleteProperty(object, key);
+  }
+  return object;
+}
+
 export default {
+  delNullProps,
   propEmpty,
   makePhoneCall,
   overKill,
