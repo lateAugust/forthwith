@@ -11,8 +11,8 @@
       <avatar :name="userInfo.username || ' '" :url="userInfo.avatar" />
       <view class="margin-left flex-sub">
         <view class="text-bold text-lg">
-          <view style="min-height: 76rpx">{{ userInfo.username || '' }}</view>
-          <view class="cuIcon-female text-pink" v-if="userInfo.age"></view>
+          <text style="min-height: 76rpx">{{ userInfo.username || '' }}</text>
+          <text class="cuIcon-female text-pink" v-if="userInfo.age"></text>
         </view>
         <view class="show-arrow padding-top-sm">{{ userInfo.mobile || ' ' }}</view>
       </view>
@@ -78,6 +78,9 @@ export default {
   methods: {
     handleSet() {
       this.goLogin();
+      uni.navigateTo({
+        url: '/pages/ucenter/userinfo/userinfo'
+      });
     },
     handleOut() {
       const that = this;
