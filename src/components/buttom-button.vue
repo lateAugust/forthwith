@@ -37,4 +37,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.foot {
+  z-index: 10;
+}
+</style>
