@@ -29,7 +29,7 @@ export default {
     },
     quantity: {
       type: Array,
-      default: () => [0, 2]
+      default: () => [0, 3]
     }
   }
 };
