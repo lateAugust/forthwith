@@ -13,6 +13,18 @@
       }
     },
     {
+      "path": "pages/contacter/searching/searching",
+      "style": {
+        "navigationBarTitleText": "添加好友"
+      }
+    },
+    {
+      "path": "pages/contacter/searching/detail",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    },
+    {
       "path": "pages/ucenter/login/login",
       "style": {
         "navigationBarTitleText": "登录"
@@ -72,7 +84,7 @@
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "晚霞的聊天工具",
-    "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarBackgroundColor": "#0081ff",
     "backgroundColor": "#F8F8F8"
   }
 }

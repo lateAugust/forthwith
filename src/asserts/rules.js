@@ -7,6 +7,9 @@ const RULES = {
   },
   userInfo: {
     username: '用户名是必须的'
+  },
+  contacter: {
+    keywords: '手机、昵称是必须的'
   }
 };
 

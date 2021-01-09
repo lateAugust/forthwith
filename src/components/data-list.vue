@@ -68,7 +68,7 @@ export default {
     clearEmptyProps(o) {
       let c = { ...o };
       for (const [keys, val] of Object.entries(c)) {
-        if (!this.$gMethod.nonEmpty(val) || !this.$methods.propEmpty(val)) Reflect.deleteProperty(c, keys);
+        if (!this.$methods.propEmpty(val) || !this.$methods.propEmpty(val)) Reflect.deleteProperty(c, keys);
       }
       return c;
     },
