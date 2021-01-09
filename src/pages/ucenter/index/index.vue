@@ -1,26 +1,10 @@
 <template>
   <view class="text-black">
-    <!-- <view class="cu-form-group">
-      <avatar :name="userInfo.username" :url="userInfo.avatar" />
-      <view>
-        <text>{{ userInfo.username || '' }}</text>
-        <text>{{ userInfo.mobile || '' }}</text>
-      </view>
-    </view> -->
-    <view class="flex bg-white padding-tb-sm padding-left-sm">
-      <avatar :name="userInfo.username || ' '" :url="userInfo.avatar" />
-      <view class="margin-left flex-sub">
-        <view class="text-bold text-lg">
-          <text style="min-height: 76rpx">{{ userInfo.username || '' }}</text>
-          <text class="cuIcon-female text-pink" v-if="userInfo.age"></text>
-        </view>
-        <view class="show-arrow padding-top-sm">{{ userInfo.mobile || ' ' }}</view>
-      </view>
-    </view>
+    <userInfoBasically :userInfo="userInfo"></userInfoBasically>
     <view class="margin-top-sm">
       <view class="cu-list menu">
-        <view class="cu-item arrow" @tap="handleSet">
-          <view class="content">
+        <view class="cu-item" @tap="handleSet">
+          <view class="content show-arrow">
             <!-- <text class="cuIcon-circlefill text-grey"></text> -->
             <text>修改资料</text>
           </view>
@@ -61,13 +45,13 @@
 </template>
 
 <script>
-import avatar from '@/components/avatar';
 import goLoginMixins from '@/mixins/user/go-login';
+import userInfoBasically from '@/components/userinfo-basically';
 import { mapState } from 'vuex';
 export default {
   mixins: [goLoginMixins],
   components: {
-    avatar
+    userInfoBasically
   },
   onShow() {
     this.goLogin();
