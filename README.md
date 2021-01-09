@@ -5,7 +5,8 @@ Im 服务的客户端
 ## Project setup
 
 ```
-yarn install
+yarn install || npm install
+注: 如果安装不了, 请更换npm|yarn源
 ```
 
 ### Compiles and hot-reloads for development
