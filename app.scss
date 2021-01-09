@@ -5,7 +5,7 @@
 .show-arrow:before {
   position: absolute;
   top: 0;
-  right: 30upx;
+  right: 0;
   bottom: 0;
   display: block;
   margin: auto;
@@ -17,4 +17,15 @@
   font-size: 34upx;
   font-family: cuIcon;
   line-height: 30upx;
+}
+
+.dis-ib {
+  display: inline-block;
+}
+.vertical-middle {
+  vertical-align: middle;
+}
+
+.cu-modal {
+  z-index: 998;
 }
