@@ -5,11 +5,11 @@
       <view class="margin-right text-bold padding-bottom-xs">{{ userInfo.nickname || userInfo.username || '' }}</view>
       <view class="flex align-center" :class="{ 'show-arrow': showArrow }">
         <template>
-          <view class="cu-tag sm line-blue cuIcon-male padding-tb-xs" v-if="userInfo.gender === '男'">
+          <view class="cu-tag sm line-blue padding-tb-xs" v-if="userInfo.gender === '男'">
             <text class="cuIcon-male">男</text>
             <text class="dis-ib center">{{ userInfo.age || '' }}</text>
           </view>
-          <view class="cu-tag sm radius line-red cuIcon-female padding-tb-xs" v-else-if="userInfo.gender === '女'">
+          <view class="cu-tag sm radius line-red padding-tb-xs" v-else-if="userInfo.gender === '女'">
             <text class="cuIcon-female">女</text>
             <text class="dis-ib center">{{ userInfo.age || '' }}</text>
           </view>
