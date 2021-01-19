@@ -2,7 +2,7 @@
   <view>
     <view style="height: 104upx"></view>
     <view class="cu-bar foot padding-left-sm padding-right-sm padding-top-sm padding-bottom-sm bg-white">
-      <button class="cu-btn response" :class="[bgColor]" @click="handleSave">
+      <button class="cu-btn response" :class="[bgColor]" @click="handleSave" :disabled="disabled">
         <text class="cuIcon-loading2 cuIconfont-spin margin-right-xs" v-if="loading"></text>
         {{ title }}
       </button>
@@ -24,6 +24,10 @@ export default {
     bgColor: {
       type: String,
       default: 'bg-blue'
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
