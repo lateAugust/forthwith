@@ -19,10 +19,24 @@
       </view>
     </view>
     <dataList :http="getSearching" :rData="rData" :isShowNonData="isShowNonData" @data="handleList" ref="list">
-      <item v-for="bean of list" :key="bean.id" :bean="bean" @go="handleGo" @add="handleAdd"></item>
+      <item
+        v-for="(bean, index) of list"
+        :key="bean.id"
+        :bean="bean"
+        @go="
+          () => {
+            handleGo(bean, index);
+          }
+        "
+        @add="
+          () => {
+            handleAdd(bean, index);
+          }
+        "
+      ></item>
     </dataList>
     <view v-if="show">
-      <addContacter v-model="show" :bean="bean"></addContacter>
+      <addContacter v-model="show" :bean="bean" @success="refresh"></addContacter>
     </view>
   </view>
 </template>
@@ -47,10 +61,21 @@ export default {
       isShowNonData: false,
       list: [],
       show: false,
-      bean: {}
+      bean: {},
+      index: -1
     };
   },
+  onShow() {
+    this.refresh();
+  },
   methods: {
+    refresh() {
+      let refreshList = this.$store.state.contacter.refreshList;
+      if (Object.keys(refreshList).length >= 1) {
+        this.list.splice(this.index, 1, Object.assign({}, this.bean, { proposer: refreshList }));
+        this.$store.commit('contacter/setRefreshList', {});
+      }
+    },
     handleSearch() {
       let rData = {
         keywords: this.keywords
@@ -67,14 +92,18 @@ export default {
       this.keywords = '';
       // this.rData = {};
     },
-    handleGo(bean) {
-      console.log(222);
+    handleGo(bean, index) {
+      this.index = index;
+      this.bean = bean;
       uni.navigateTo({
-        url: `/pages/contacter/searching/detail?id=${bean.user.id}&proposer_id=${bean.proposer.id}`
+        url: `/pages/contacter/searching/searching-detail?id=${bean.user.id}${
+          bean.proposer.id ? '&proposer_id=' + bean.proposer.id : ''
+        }`
       });
     },
-    handleAdd(bean) {
+    handleAdd(bean, index) {
       this.bean = bean;
+      this.index = index;
       this.show = true;
       // 添加好友
     }

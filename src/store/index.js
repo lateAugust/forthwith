@@ -1,10 +1,12 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 
+import contacter from './modules/contacter';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: {},
+  modules: { contacter },
   state: {
     userInfo: {},
     token: '',

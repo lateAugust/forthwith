@@ -19,7 +19,25 @@
       }
     },
     {
-      "path": "pages/contacter/searching/detail",
+      "path": "pages/contacter/apply/list",
+      "style": {
+        "navigationBarTitleText": "申请列表"
+      }
+    },
+    {
+      "path": "pages/contacter/searching/searching-detail",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "pages/contacter/apply/apply-detail",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "pages/contacter/detail/finished-detail",
       "style": {
         "navigationBarTitleText": ""
       }

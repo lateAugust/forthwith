@@ -1,39 +1,7 @@
 <template>
   <view>
-    <userInfoBasically :userInfo="user" :showArrow="false"></userInfoBasically>
-    <view class="margin-top">
-      <view class="cu-form-group">
-        <view class="title">用户名</view>
-        <view class="content">{{ user.username }}</view>
-      </view>
-      <view class="cu-form-group">
-        <view class="title">昵称</view>
-        <view class="content">{{ user.username || '--' }}</view>
-      </view>
-      <view class="cu-form-group">
-        <view class="title">年龄</view>
-        <view class="content">{{ user.age || '--' }}</view>
-      </view>
-      <view class="cu-form-group">
-        <view class="title">性别</view>
-        <view class="content">{{ user.gender || '--' }}</view>
-      </view>
-    </view>
-    <view class="margin-top">
-      <view class="cu-form-group">
-        <view class="title">手机</view>
-        <view class="content">{{ user.mobile || '--' }}</view>
-      </view>
-      <view class="cu-form-group">
-        <view class="title">email</view>
-        <view class="content">{{ user.email || '--' }}</view>
-      </view>
-      <view class="cu-form-group">
-        <view class="title">地址</view>
-        <view class="content">{{ user.address || '' }}</view>
-      </view>
-    </view>
-    <view class="margin-top">
+    <detail :user="bean.user"></detail>
+    <view class="margin-top" v-if="proposer.id">
       <view class="cu-form-group align-start">
         <view class="title">附加信息</view>
         <textarea maxlength="-1" disabled v-model="proposer.message" placeholder="--"></textarea>
@@ -42,20 +10,28 @@
     <view v-if="show">
       <addContacter v-model="show" :bean="bean" @success="handleSuccess"></addContacter>
     </view>
-    <buttomButton :title="proposer.id ? '修改附加信息' : '添加'" @save="handleSave"></buttomButton>
+    <template v-if="$slots.buttons">
+      <slot slot="buttons"></slot>
+    </template>
+    <template v-else-if="friend.id">
+      <buttomButton title="发消息" @save="handleSave"></buttomButton>
+    </template>
+    <template v-else>
+      <buttomButton :title="buttomTitle" @save="handleSave"></buttomButton>
+    </template>
   </view>
 </template>
 
 <script>
-import userInfoBasically from '@/components/userinfo-basically';
 import addContacter from '@/components/add-contacter';
 import buttomButton from '@/components/buttom-button';
+import detail from '../components/detail';
 import apiContacter from '@/api/contacter';
 export default {
   components: {
-    userInfoBasically,
     buttomButton,
-    addContacter
+    addContacter,
+    detail
   },
   data() {
     return {
@@ -64,7 +40,7 @@ export default {
     };
   },
   onLoad({ id, proposer_id }) {
-    this.getDetail(id, proposer_id);
+    this.getDetail(id, proposer_id || 0);
   },
   methods: {
     getDetail(id, proposer_id) {
@@ -96,6 +72,16 @@ export default {
     },
     proposer() {
       return this.bean.proposer || {};
+    },
+    friend() {
+      return this.bean.friend || {};
+    },
+    buttomTitle() {
+      let title = '添加';
+      if (this.proposer.id) {
+        title = this.proposer.status === 'reject' ? '重新申请' : '修改附加消息';
+      }
+      return title;
     }
   },
   mounted() {}
