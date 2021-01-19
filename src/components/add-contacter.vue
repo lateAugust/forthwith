@@ -3,7 +3,7 @@
     <view class="cu-dialog">
       <view class="cu-bar bg-white justify-end">
         <view class="content">
-          添加-
+          {{ title }}-
           <text class="text-bold">{{ bean.user.username }}</text>
         </view>
         <view class="action" @tap="handleClose">
@@ -47,14 +47,17 @@ export default {
         username: userInfo.username,
         gender: userInfo.gender,
         age: userInfo.age,
-        id: userInfo.id
+        id: userInfo.id,
+        avatar: userInfo.avatar
       },
+      is_review: proposer.status || '',
       target_user: {
         nickname: user.nickname,
         username: user.username,
         age: user.age,
         gender: user.gender,
-        id: user.id
+        id: user.id,
+        avatar: user.avatar
       }
     };
     return {
@@ -84,6 +87,8 @@ export default {
             icon: 'success',
             mask: true
           });
+          let { apply_status, id, message } = res.data;
+          this.$store.commit('contacter/setRefreshList', { status: apply_status, id, message });
           this.$emit('success');
           this.handleClose();
         })
@@ -94,6 +99,18 @@ export default {
     handleClose() {
       this.formBean.message = '';
       this.$emit('input', false);
+    }
+  },
+  computed: {
+    title() {
+      let title = '添加';
+      let is_review = this.formBean.is_review;
+      if (is_review === 'reject') {
+        title = '重新添加';
+      } else if (is_review === 'underReview') {
+        title = '修改';
+      }
+      return title;
     }
   }
 };
