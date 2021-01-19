@@ -1,5 +1,5 @@
 <template>
-  <view class="load-more">
+  <view class="data-list">
     <slot></slot>
     <template v-if="upOrDown">
       <slot name="noData" v-if="!loading && !list.length">
@@ -27,12 +27,13 @@
 export default {
   name: 'data-list',
   data() {
+    let { page, page_size } = this.pagenation;
     return {
-      page: 1,
+      page,
       isEnd: false,
       list: [],
       loading: false,
-      page_size: 10,
+      page_size,
       upOrDown: true
     };
   },
@@ -44,6 +45,10 @@ export default {
     http: {
       type: Function,
       required: true
+    },
+    pagenation: {
+      type: Object,
+      default: () => ({ page: 1, page_size: 10 })
     },
     noDataTop: {
       type: Number,
