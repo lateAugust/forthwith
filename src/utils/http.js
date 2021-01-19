@@ -35,7 +35,7 @@ export default function (url, data, method = 'GET') {
               confirmText: '确定',
               success(res) {
                 if (res.confirm) {
-                  uni.navigateTo({
+                  uni.reLaunch({
                     url: '/pages/ucenter/login/login'
                   });
                 }
