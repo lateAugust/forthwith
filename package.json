@@ -61,6 +61,7 @@
     "@vue/shared": "^3.0.0",
     "core-js": "^3.6.5",
     "flyio": "^0.6.2",
+    "pinyin": "^2.9.1",
     "regenerator-runtime": "^0.12.1",
     "vue": "^2.6.11",
     "vuex": "^3.2.0"
@@ -93,11 +94,11 @@
     "lint-staged": "^10.5.2",
     "mini-types": "*",
     "miniprogram-api-typings": "*",
+    "node-sass": "^4.14.1",
     "postcss-comment": "^2.0.0",
     "prettier": "^2.2.0",
     "pretty-quick": "^3.1.0",
-    "sass-loader": "^10.1.0",
-    "sass-node": "^4.11.2",
+    "sass-loader": "10.1.0",
     "vue-template-compiler": "^2.6.11"
   },
   "lint-staged": {
