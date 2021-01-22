@@ -74,6 +74,7 @@ export default {
     handleGo() {
       if (!rules(this.formBean, 'userInfo')) return;
       uni.showLoading({ message: '保存中...', mask: true });
+      this.formBean.pin_yin = this.$methods.transformPinYin(this.formBean.username);
       apiUser
         .setUserInfo(this.$methods.delNullProps(this.formBean))
         .then((res) => {

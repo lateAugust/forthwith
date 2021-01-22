@@ -55,6 +55,7 @@ export default {
     handleRegister() {
       if (!rules(this.formBean, 'loginRegister')) return;
       uni.showLoading({ title: '注册中...' });
+      this.formBean.pin_yin = this.$methods.transformPinYin(this.formBean.username);
       apiUser
         .register(this.formBean)
         .then(() => {
