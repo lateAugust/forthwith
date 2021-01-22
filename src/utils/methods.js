@@ -1,3 +1,4 @@
+import pinyin from 'pinyin';
 function propEmpty(val) {
   return (
     /(number|boolean)/gi.test(typeof val) ||
@@ -75,11 +76,22 @@ function delNullProps(object) {
   return object;
 }
 
+/**
+ * 将中文转化为拼音
+ * @param {*} text 要转化的文本
+ * @param {*} connector 连接符 默认下划线(_)
+ * @param {*} options pinyinlite的options参数 https://github.com/hotoo/pinyin
+ */
+function transformPinYin(text, connector = '-', options = {}) {
+  return pinyin(text, options).flat().join(connector);
+}
+
 export default {
   delNullProps,
   propEmpty,
   makePhoneCall,
   overKill,
   typeOf,
-  isPhone
+  isPhone,
+  transformPinYin
 };
