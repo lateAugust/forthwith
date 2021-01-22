@@ -1,6 +1,6 @@
 <template>
   <view class="flex bg-white padding-tb-sm padding-left-sm padding-right">
-    <avatar :name="userInfo.username || ' '" :url="userInfo.avatar" />
+    <avatar :name="userInfo.nickname || userInfo.username || ' '" :url="userInfo.avatar" />
     <view class="margin-left flex-sub text-lg">
       <view class="margin-right text-bold padding-bottom-xs">{{ userInfo.nickname || userInfo.username || '' }}</view>
       <view class="flex align-center" :class="{ 'show-arrow': showArrow }">

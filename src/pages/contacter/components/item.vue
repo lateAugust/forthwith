@@ -1,6 +1,6 @@
 <template>
   <view class="flex margin-top-sm padding-sm bg-white align-center" @tap="$emit('go', bean)">
-    <avatar :url="user.avatar" :name="user.username" :quantity="[0, 3]"></avatar>
+    <avatar :url="user.avatar" :name="user.nickname || user.username" :quantity="[0, 3]"></avatar>
     <view class="flex-sub margin-left">
       <view class="text-bold text-lg">{{ user.nickname || user.username || '' }}</view>
       <view class="padding-top-xs">
