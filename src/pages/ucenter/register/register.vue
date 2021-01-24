@@ -55,10 +55,11 @@ export default {
     handleRegister() {
       if (!rules(this.formBean, 'loginRegister')) return;
       uni.showLoading({ title: '注册中...' });
-      this.formBean.pin_yin = this.$methods.transformPinYin(this.formBean.username);
+      this.formBean.pin_yin = this.$methods.transformPinYin(this.formBean.nickname || this.formBean.username);
       apiUser
         .register(this.formBean)
         .then(() => {
+          this.formBean = { username: '', password: '', confirm_password: '' };
           uni.showModal({
             title: '登录',
             content: '注册成功, 是否去登录?',
@@ -67,7 +68,6 @@ export default {
             cancelText: '取消',
             confirmText: '确定',
             success(res) {
-              console.log(res.confirm);
               if (res.confirm) {
                 uni.redirectTo({
                   url: '/pages/ucenter/login/login'
