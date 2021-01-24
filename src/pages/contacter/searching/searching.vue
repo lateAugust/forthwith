@@ -72,7 +72,9 @@ export default {
     refresh() {
       let refreshList = this.$store.state.contacter.refreshList;
       if (Object.keys(refreshList).length >= 1) {
-        this.list.splice(this.index, 1, Object.assign({}, this.bean, { proposer: refreshList }));
+        let proposer = Object.assign({}, this.bean.proposer || {}, refreshList.proposer);
+        let friend = Object.assign({}, this.bean.friend || {}, refreshList.friend);
+        this.list.splice(this.index, 1, Object.assign({}, this.bean, { proposer, friend }));
         this.$store.commit('contacter/setRefreshList', {});
       }
     },
@@ -95,6 +97,13 @@ export default {
     handleGo(bean, index) {
       this.index = index;
       this.bean = bean;
+      let proposer = bean.proposer;
+      if (proposer.target_id === this.$store.state.userInfo.id && proposer.apply_status === 'underReview') {
+        uni.navigateTo({
+          url: `/pages/contacter/apply/apply-detail?id=${proposer.id}`
+        });
+        return;
+      }
       uni.navigateTo({
         url: `/pages/contacter/searching/searching-detail?id=${bean.user.id}${
           bean.proposer.id ? '&proposer_id=' + bean.proposer.id : ''

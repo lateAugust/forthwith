@@ -27,6 +27,8 @@ import addContacter from '@/components/add-contacter';
 import buttomButton from '@/components/buttom-button';
 import detail from '../components/detail';
 import apiContacter from '@/api/contacter';
+
+import { mapState } from 'vuex';
 export default {
   components: {
     buttomButton,
@@ -67,6 +69,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['userInfo']),
     user() {
       return this.bean.user || {};
     },
@@ -77,9 +80,10 @@ export default {
       return this.bean.friend || {};
     },
     buttomTitle() {
+      let proposer = this.proposer;
       let title = '添加';
-      if (this.proposer.id) {
-        title = this.proposer.status === 'reject' ? '重新申请' : '修改附加消息';
+      if (proposer.id) {
+        title = proposer.apply_status === 'reject' ? '重新申请' : '修改附加消息';
       }
       return title;
     }

@@ -45,15 +45,17 @@ export default {
       apply_user: {
         nickname: userInfo.nickname,
         username: userInfo.username,
+        pin_yin: userInfo.pin_yin,
         gender: userInfo.gender,
         age: userInfo.age,
         id: userInfo.id,
         avatar: userInfo.avatar
       },
-      is_review: proposer.status || '',
+      is_review: proposer.apply_status || '',
       target_user: {
         nickname: user.nickname,
         username: user.username,
+        pin_yin: user.pin_yin,
         age: user.age,
         gender: user.gender,
         id: user.id,
@@ -87,8 +89,8 @@ export default {
             icon: 'success',
             mask: true
           });
-          let { apply_status, id, message } = res.data;
-          this.$store.commit('contacter/setRefreshList', { status: apply_status, id, message });
+          let { apply_status, id, message, target_id } = res.data;
+          this.$store.commit('contacter/setRefreshList', { proposer: { apply_status, id, message, target_id } });
           this.$emit('success');
           this.handleClose();
         })

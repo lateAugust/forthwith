@@ -20,12 +20,13 @@ export default {
           store.commit('contacter/setCount', Math.max(store.state.contacter.count - 1, 0));
           // 这里的id可能是朋友id或者当前列表id
           // 在同意后就出现发消息按钮, 拼接上friend_id, 判断主要用apply_status
-          let { apply_status, id, friend_id } = res.data;
+          let { apply_status, id } = res.data;
+          let friend = {};
           if (!apply_status) {
             apply_status = 'agreement';
-            friend_id = id;
+            friend.id = id;
           }
-          store.commit('contacter/setRefreshList', { apply_status, friend_id });
+          store.commit('contacter/setRefreshList', { apply_status, friend });
           this.refresh && this.refresh();
 
           uni.showToast({

@@ -27,8 +27,14 @@
       <template v-else>
         <button class="cu-btn bg-blue" v-if="friend.id">发消息</button>
         <template v-else-if="proposer.id">
-          <button class="cu-btn bg-blue" v-if="proposer.status === 'underReview'" disabled>申请中</button>
-          <button class="cu-btn bg-blue" v-if="proposer.status === 'reject'" disabled>已拒绝</button>
+          <button
+            class="cu-btn bg-blue"
+            v-if="proposer.apply_status === 'underReview' && proposer.target_id === $store.state.userInfo.id"
+          >
+            待验证
+          </button>
+          <button class="cu-btn bg-blue" v-else-if="proposer.apply_status === 'underReview'" disabled>申请中</button>
+          <button class="cu-btn bg-blue" v-else-if="proposer.apply_status === 'reject'" disabled>已拒绝</button>
         </template>
         <button class="cu-btn bg-blue" v-else @tap.stop="$emit('add', bean)">添加</button>
       </template>
