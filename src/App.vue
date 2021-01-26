@@ -3,7 +3,12 @@
 export default {
   onLoad() {},
   onLaunch: function () {
-    this.$store.dispatch('getStorageUser');
+    let $store = this.$store;
+    // ifdef H5
+    $store.commit('setisH5');
+    // #endif
+    $store.dispatch('getStorageUser');
+    $store.dispatch('getSystemInfo');
     console.log('App Launch');
   },
   onShow: function () {

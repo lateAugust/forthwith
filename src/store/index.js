@@ -10,7 +10,10 @@ export default new Vuex.Store({
   state: {
     userInfo: {},
     token: '',
-    isLogin: false
+    isLogin: false,
+    isH5: false,
+    dpi: 0.5,
+    systemInfo: {}
   },
   mutations: {
     login(state, { userInfo, token }) {
@@ -28,6 +31,15 @@ export default new Vuex.Store({
       state.isLogin = false;
       state.token = '';
       uni.removeStorage({ key: 'user' });
+    },
+    setisH5(state, boolean) {
+      state.isH5 = boolean;
+    },
+    setDpi(state, number) {
+      state.dpi = number;
+    },
+    setSystemInfo(state, data) {
+      state.systemInfo = data;
     }
   },
   actions: {
@@ -45,6 +57,14 @@ export default new Vuex.Store({
             }
           }
         });
+      });
+    },
+    getSystemInfo({ commit }) {
+      uni.getSystemInfo({
+        success: (result) => {
+          commit('setSystemInfo', result);
+          commit('setDpi', result.windowWidth / 750);
+        }
       });
     }
   },
