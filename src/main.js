@@ -2,6 +2,8 @@ import Vue from 'vue';
 import App from './App';
 import store from './store';
 
+import './filter';
+
 import methods from './utils/methods';
 
 Vue.config.productionTip = false;
