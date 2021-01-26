@@ -13,6 +13,12 @@
       }
     },
     {
+      "path": "pages/contacter/list/list-detail",
+      "style": {
+        "navigationBarTitleText": "联系人详情"
+      }
+    },
+    {
       "path": "pages/contacter/searching/searching",
       "style": {
         "navigationBarTitleText": "添加好友"

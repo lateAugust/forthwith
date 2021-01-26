@@ -20,5 +20,11 @@ export default {
   },
   getApplyListDetail(id) {
     return http('/friends/apply/list/' + id);
+  },
+  friendsList() {
+    return http('/friends/list');
+  },
+  friendsDetail(data) {
+    return http('/friends/detail', data);
   }
 };
