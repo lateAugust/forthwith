@@ -25,7 +25,7 @@ export default function (value, ...rest) {
           if (diff < 1000 * 3600 * 24) {
             value = moment(date).format('HH:mm');
           } else {
-            value = moment(date).format('MM-DD');
+            value = moment(date).format('MM-DD HH:mm');
           }
           break;
         }
