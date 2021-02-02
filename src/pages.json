@@ -7,6 +7,13 @@
       }
     },
     {
+      "path": "pages/messages/window/chat",
+      "style": {
+        "enablePullDownRefresh": true,
+        "navigationBarTitleText": ""
+      }
+    },
+    {
       "path": "pages/contacter/list/list",
       "style": {
         "navigationBarTitleText": "联系人"
