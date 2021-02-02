@@ -7,7 +7,7 @@
         <view>{{ bean.friend.create_at | moment('now') }}</view>
       </view>
     </view>
-    <save title="发消息"></save>
+    <save title="发消息" @save="handleGo"></save>
   </view>
 </template>
 
@@ -51,6 +51,11 @@ export default {
         .finally(() => {
           uni.hideLoading();
         });
+    },
+    handleGo() {
+      uni.navigateTo({
+        url: `/pages/messages/window/chat?receive_id=${this.bean.user.id}&send_id=${this.$store.state.userInfo.id}`
+      });
     }
   }
 };
