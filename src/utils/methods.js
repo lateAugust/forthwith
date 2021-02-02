@@ -86,6 +86,27 @@ function transformPinYin(text, connector = '-', options = {}) {
   return pinyin(text, options).flat().join(connector);
 }
 
+function rankKey(array, type = 'asc') {
+  let sort = type === 'desc' ? (a, b) => a - b : (a, b) => b - a;
+  return array.sort(sort).join(',');
+}
+
+/**
+ * 获取元素修改信息
+ * @param {*} selector 类似于 CSS 的选择器
+ */
+function getElement(selector) {
+  return new Promise((res) => {
+    uni
+      .createSelectorQuery()
+      .select(selector)
+      .boundingClientRect(function (data) {
+        res(data);
+      })
+      .exec();
+  });
+}
+
 export default {
   delNullProps,
   propEmpty,
@@ -93,5 +114,7 @@ export default {
   overKill,
   typeOf,
   isPhone,
-  transformPinYin
+  transformPinYin,
+  getElement,
+  rankKey
 };
