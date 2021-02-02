@@ -77,8 +77,9 @@ export default {
         confirmText: '确定',
         success(res) {
           if (res.confirm) {
+            that.$store.state.websocket.closeWebsocket();
             that.$store.commit('logOut');
-            that.goLogin();
+            // that.goLogin();
           }
         }
       });
