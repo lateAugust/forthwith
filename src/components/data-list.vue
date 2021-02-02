@@ -1,5 +1,13 @@
 <template>
   <view class="data-list">
+    <template v-if="!upOrDown">
+      <slot name="isEnd" v-if="isEnd && !loading && list.length">
+        <view class="cu-load over"></view>
+      </slot>
+      <slot name="loading" v-else-if="loading">
+        <view class="cu-load loading"></view>
+      </slot>
+    </template>
     <slot></slot>
     <template v-if="upOrDown">
       <slot name="noData" v-if="!loading && !list.length">
@@ -33,8 +41,7 @@ export default {
       isEnd: false,
       list: [],
       loading: false,
-      page_size,
-      upOrDown: true
+      page_size
     };
   },
   props: {
@@ -57,15 +64,19 @@ export default {
     isShowNonData: {
       type: Boolean,
       default: true
+    },
+    upOrDown: {
+      type: Boolean,
+      default: true
+    },
+    listenersRdata: {
+      type: Boolean,
+      default: true
     }
   },
   watch: {
     rData: {
-      handler() {
-        if (!this.loading) {
-          this.getData(true);
-        }
-      },
+      handler() {},
       deep: true
     }
   },
@@ -90,11 +101,14 @@ export default {
             this.list = [];
             this.isEnd = false;
           }
-          this.list[this.upOrDown ? 'push' : 'unshift'](...data);
+          // this.list[this.upOrDown ? 'push' : 'unshift'](...data);
+          this.list.push(...data);
           this.$emit('data', this.list);
           this.isEnd = data.length < this.page_size;
         })
-        .catch(() => {})
+        .catch((error) => {
+          this.$emit('error', error);
+        })
         .finally(() => {
           this.loading = false;
           // #ifdef H5
@@ -109,8 +123,8 @@ export default {
       }
     },
     handlerDown() {
-      if (this.loading && !this.isEnd) {
-        this.upOrDown = false;
+      if (!this.loading && !this.isEnd) {
+        // this.upOrDown = false;
         this.page++;
         this.getData();
       } else {
@@ -120,7 +134,19 @@ export default {
       }
     }
   },
-  mounted() {}
+  mounted() {
+    if (this.listenersRdata) {
+      this.$watch(
+        'rData',
+        () => {
+          if (!this.loading) {
+            this.getData(true);
+          }
+        },
+        { deep: true }
+      );
+    }
+  }
 };
 </script>
 
