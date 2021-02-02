@@ -9,5 +9,8 @@ export default {
   },
   setUserInfo(data) {
     return http('/users/info', data, 'put');
+  },
+  getUserInfo(id) {
+    return http('/users/info/' + id);
   }
 };
