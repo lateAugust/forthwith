@@ -50,6 +50,7 @@ export default {
         .login(this.formBean)
         .then((res) => {
           this.$store.commit('login', { userInfo: res.data, token: res.token });
+          this.$store.state.websocket.init(res.token);
           uni.showToast({ title: '登录成功' });
           uni.switchTab({
             url: '/pages/messages/list/list'

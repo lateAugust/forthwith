@@ -2,18 +2,20 @@ import Vuex from 'vuex';
 import Vue from 'vue';
 
 import contacter from './modules/contacter';
+import messages from './modules/messages';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: { contacter },
+  modules: { contacter, messages },
   state: {
     userInfo: {},
     token: '',
     isLogin: false,
     isH5: false,
     dpi: 0.5,
-    systemInfo: {}
+    systemInfo: {},
+    websocket: null
   },
   mutations: {
     login(state, { userInfo, token }) {
@@ -40,10 +42,13 @@ export default new Vuex.Store({
     },
     setSystemInfo(state, data) {
       state.systemInfo = data;
+    },
+    setWebsocket(state, websocket) {
+      state.websocket = websocket;
     }
   },
   actions: {
-    getStorageUser({ commit }) {
+    getStorageUser({ state, commit }) {
       return new Promise((res, rej) => {
         uni.getStorage({
           key: 'user',
@@ -51,6 +56,7 @@ export default new Vuex.Store({
             let { userInfo, token } = result.data;
             if (token) {
               commit('login', { userInfo, token });
+              state.websocket.init(token);
               res({ data: userInfo });
             } else {
               rej(null);
