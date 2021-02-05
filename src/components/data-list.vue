@@ -1,7 +1,17 @@
 <template>
   <view class="data-list">
     <template v-if="!upOrDown">
-      <slot name="isEnd" v-if="isEnd && !loading && list.length">
+      <slot name="noData" v-if="!loading && !list.length">
+        <view :style="{ paddingTop: noDataTop + 'px' }" class="flex justify-around align-center" v-if="isShowNonData">
+          <view>
+            <view class="text-xsl">
+              <text class="cuIcon-attentionforbidfill text-gray"></text>
+            </view>
+            <text class="text-gray">暂无数据</text>
+          </view>
+        </view>
+      </slot>
+      <slot name="isEnd" v-else-if="isEnd && !loading && list.length">
         <view class="cu-load over"></view>
       </slot>
       <slot name="loading" v-else-if="loading">
@@ -117,7 +127,7 @@ export default {
         });
     },
     handlerUp() {
-      if (this.loading && !this.isEnd) {
+      if (!this.loading && !this.isEnd) {
         this.page++;
         this.getData();
       }
