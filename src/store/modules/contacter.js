@@ -3,7 +3,8 @@ export default {
   state: {
     applyDetail: {},
     count: 0,
-    refreshList: {}
+    refreshList: {},
+    refreshContactList: false
   },
   mutations: {
     setApplyDetail(state, bean) {
@@ -14,6 +15,9 @@ export default {
     },
     setRefreshList(state, data) {
       state.refreshList = data;
+    },
+    setRefreshContactList(state, boolean = false) {
+      state.refreshContactList = boolean;
     }
   }
 };

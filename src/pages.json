@@ -7,10 +7,17 @@
       }
     },
     {
-      "path": "pages/messages/window/chat",
+      "path": "pages/messages/window/message",
       "style": {
         "enablePullDownRefresh": true,
         "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "pages/messages/window/notification",
+      "style": {
+        "enablePullDownRefresh": true,
+        "navigationBarTitleText": "好友验证"
       }
     },
     {

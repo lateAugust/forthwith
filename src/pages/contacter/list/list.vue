@@ -87,6 +87,10 @@ export default {
   },
   onShow() {
     this.goLogin();
+    if (this.$store.state.contacter.refreshContactList) {
+      this.getFriendsList();
+      this.$store.commit('contacter/setRefreshContactList');
+    }
   },
   onLoad() {
     this.getApplyCount();

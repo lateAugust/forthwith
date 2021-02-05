@@ -18,6 +18,9 @@ export default {
         .then((res) => {
           let store = this.$store;
           store.commit('contacter/setCount', Math.max(store.state.contacter.count - 1, 0));
+          if (status === 'agreement') {
+            store.commit('contacter/setRefreshContactList', true);
+          }
           // 这里的id可能是朋友id或者当前列表id
           // 在同意后就出现发消息按钮, 拼接上friend_id, 判断主要用apply_status
           let { apply_status, id } = res.data;

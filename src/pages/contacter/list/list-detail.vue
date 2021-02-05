@@ -54,7 +54,7 @@ export default {
     },
     handleGo() {
       uni.navigateTo({
-        url: `/pages/messages/window/chat?receive_id=${this.bean.user.id}&send_id=${this.$store.state.userInfo.id}`
+        url: `/pages/messages/window/message?receive_id=${this.bean.user.id}&send_id=${this.$store.state.userInfo.id}&link_id=${this.bean.link.id}`
       });
     }
   }

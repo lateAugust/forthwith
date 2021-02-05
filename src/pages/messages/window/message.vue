@@ -53,6 +53,8 @@
         cursor-spacing="10"
         @focus="InputFocus"
         @blur="InputBlur"
+        @confirm="handleSend"
+        confirm-type="send"
         v-model="content"
       />
       <!-- <view class="action">
@@ -87,6 +89,8 @@ export default {
       InputBottom: 0,
       receiveId: null,
       sendId: null,
+      linkId: null,
+      type: '',
       receiveUser: {},
       listHegith: 0,
       scrollTop: 0,
@@ -95,15 +99,23 @@ export default {
       dpi: state.dpi
     };
   },
-  onLoad({ receive_id, send_id }) {
+  onUnload() {
+    this.$store.websocket.onSend({ link_id: this.linkId });
+  },
+  onLoad({ receive_id, send_id, type, link_id }) {
+    this.$store.commit('messages/setCurrentMessages', this.$methods.rankKey([receive_id, send_id]));
+    this.$store.commit('message/setRead', link_id);
     this.receiveId = +receive_id;
     this.sendId = +send_id;
+    this.linkId = +link_id;
+    this.type = type;
     // let { nickname, username } = this.receiveUser;
     // uni.setNavigationBarTitle({ title: nickname || username });
     this.getUserInfo();
     this.rData = {
       receive_id,
-      send_id
+      send_id,
+      type
     };
     this.$nextTick(() => {
       this.$refs.list.getData(true);
@@ -121,6 +133,8 @@ export default {
   watch: {
     '$store.state.messages.newMessage': {
       handler(data) {
+        console.log(data);
+        if (data.type !== 'message') return;
         if (data.send_id === this.userInfo.id) {
           this.scrollTop = 1000000000000000000000000;
           this.watchList(false);
@@ -140,7 +154,7 @@ export default {
     },
     getList() {
       let message = this.$store.state.messages.newMessagesList[this.rankKey] || [];
-      this.list = [...message, ...this.oldList].reverse();
+      this.list = [...this.oldList.reverse(), ...message];
       // console.log(this.list.map((item) => item.id));
     },
     getUserInfo() {
@@ -188,12 +202,20 @@ export default {
       this.InputBottom = 0;
     },
     handleSend() {
-      this.$store.state.websocket.onSend({
-        send_id: this.sendId,
-        receive_id: this.receiveId,
-        message: this.content
-      });
-      this.content = '';
+      if (this.content.trim()) {
+        this.$store.state.websocket.onSend({
+          send_id: this.sendId,
+          receive_id: this.receiveId,
+          message: this.content
+        });
+        this.content = '';
+      } else {
+        uni.showToast({
+          title: '不能发送空消息',
+          icon: 'error',
+          mask: true
+        });
+      }
     }
   },
   computed: {
@@ -201,8 +223,7 @@ export default {
     rankKey() {
       return this.$methods.rankKey([this.sendId, this.receiveId]);
     }
-  },
-  beforeUpdate() {}
+  }
 };
 </script>
 
