@@ -15,7 +15,8 @@
 				<button open-type="getUserInfo" @getuserinfo="getuserinfo" withCredentials>open_type</button> -->
       <view class="padding-lr padding-tb-sm flex justify-between">
         <view @tap="handleRegister">没有账号?去注册</view>
-        <view>忘记密码</view>
+        <!-- 忘记密码 -->
+        <view></view>
       </view>
       <view class="text-center margin-lr-lg margin-top-lg">
         <button @tap="handleLogin" class="bg-blue">登录</button>

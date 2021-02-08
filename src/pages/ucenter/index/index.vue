@@ -19,12 +19,12 @@
             <text>退出登录</text>
           </view>
         </view>
-        <view class="cu-item menu margin-top-sm">
+        <!-- <view class="cu-item menu margin-top-sm">
           <view class="content text-center">
-            <!-- <text class="cuIcon-circlefill text-grey"></text> -->
+            <text class="cuIcon-circlefill text-grey"></text>
             <text>切换账号</text>
           </view>
-        </view>
+        </view> -->
       </template>
       <template v-else>
         <view class="cu-item" @tap="handleLogin">
