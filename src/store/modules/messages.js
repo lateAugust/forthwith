@@ -33,7 +33,7 @@ export default {
         }
       });
     },
-    getLinks({ state, commit }, data) {
+    getLinks({ state, rootState, commit }, data) {
       return new Promise((res, rej) => {
         if (data.page === 1) {
           commit('setLinks', []);
@@ -45,7 +45,9 @@ export default {
             commit('setLinks', state.links.concat(result.data));
             commit(
               'setUnreadCount',
-              result.data.map((item) => item.link.unread_count).reduce((total, item) => total + item.unread_count)
+              result.data
+                .map((item) => (item.link.receive_id === rootState.userInfo.id ? item.link.unread_count : 0))
+                .reduce((total, item) => total + item.unread_count)
             );
             res(result);
           })
@@ -63,12 +65,13 @@ export default {
       state.links = list;
     },
     setNewLinksIndex(state, { index, data }) {
-      let item = state.links.splice(index, 1);
-      item.message = data.message;
-      if (methods.rankKey([data.sned_id, data.receive_id]) === state.currentMessages) {
-        item.unreadCount += 1;
-        state.unreadCount += 1;
+      let item = state.links.splice(index, 1)[0];
+      item.link.message = data.message;
+      console.log(state.currentMessages);
+      if (methods.rankKey([data.sned_id, data.receive_id]) !== state.currentMessages) {
+        item.link.unread_count += 1;
       }
+      console.log(item);
       state.links.splice(0, 0, item);
     },
     setNewMessagesList(state, data) {
@@ -88,9 +91,12 @@ export default {
       state.unreadCount += number;
     },
     setRead(state, id) {
-      let item = state.links.find((item) => item.id === id);
-      if (item) {
-        state.unreadCount -= item.unreadCount;
+      let index = state.links.findIndex((item) => item.link.id === +id);
+      if (index > -1) {
+        let item = state.links[index];
+        state.unreadCount -= item.link.unread_count;
+        item.link.unread_count = 0;
+        state.links.splice(index, 1, item);
       }
     },
     resetUnreadCount(state) {

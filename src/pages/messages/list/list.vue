@@ -45,7 +45,7 @@ export default {
   onShow() {
     this.goLogin();
     if (this.$store.state.messages.refreshMessagesList) {
-      this.$refs.list.getDate(true);
+      this.$refs.list.getData(true);
       this.$store.commit('messages/setRefrechMessagesList');
     }
   },
@@ -54,6 +54,12 @@ export default {
       return this.$store.dispatch('messages/getLinks', data);
     },
     handleGo(item) {
+      let boolean = true;
+      if (item.link.receive_id === this.userInfo.id) {
+        boolean = this.$store.state.websocket.onSend({ link_id: item.link.id }, 'readed');
+        this.$store.commit('messages/setRead', item.link.id);
+      }
+      if (!boolean) return;
       let params =
         'send_id=' +
         this.userInfo.id +

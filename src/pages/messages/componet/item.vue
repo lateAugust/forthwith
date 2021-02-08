@@ -10,7 +10,7 @@
       <view class="flex align-center">
         <view class="text-cut">{{ link.message }}</view>
         <view class="flex-sub"></view>
-        <view class="cu-tag bg-red sm round" v-if="link.recevie_id === user.id && link.unread_count">
+        <view class="cu-tag bg-red sm round" v-if="link.receive_id === userInfo.id && link.unread_count">
           {{ link.unread_count }}
         </view>
       </view>
@@ -20,6 +20,7 @@
 
 <script>
 import avatar from '@/components/avatar';
+import { mapState } from 'vuex';
 export default {
   components: {
     avatar
@@ -31,6 +32,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['userInfo']),
     user() {
       return this.bean.user;
     },

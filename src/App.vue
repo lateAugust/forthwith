@@ -30,10 +30,14 @@ export default {
   watch: {
     '$store.state.messages.unreadCount': {
       handler(data) {
-        uni.setTabBarBadge({
-          index: 0,
-          text: data.toString()
-        });
+        if (data > 0) {
+          uni.setTabBarBadge({
+            index: 0,
+            text: data.toString()
+          });
+        } else {
+          uni.removeTabBarBadge({ index: 0 });
+        }
       },
       deep: true
     }
@@ -63,14 +67,10 @@ export default {
     onClose() {},
     processMessage(data) {
       this.$store.commit('messages/setUnreadCount', 1);
-      let index = this.links.findIndex(
-        (item) =>
-          (item.send_id === data.send_id && item.receive_id === data.receive_id) ||
-          (item.receive_id === data.send_id && item.send_id === data.receive_id)
-      );
+      let index = this.links.findIndex((item) => item.link.receive_id === this.userInfo.id);
       if (index > -1) {
         // 改变links的顺序
-        this.$store.commit('messages/setNewLinksIndex', index);
+        this.$store.commit('messages/setNewLinksIndex', { data, index });
       } else {
         // 刷新列表
         this.$store.commit('messages/setRefrechMessagesList', true);
@@ -78,7 +78,8 @@ export default {
     }
   },
   computed: {
-    ...mapState('message', ['links', 'unreadCount'])
+    ...mapState('messages', ['links', 'unreadCount']),
+    ...mapState(['userInfo'])
   }
 };
 </script>
