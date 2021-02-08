@@ -77,6 +77,7 @@ export default class {
     if (this.websocketStatus) {
       let obj = { event: type, data };
       this.socketTask.send({ data: this.objectToString(obj) });
+      return true;
     } else {
       uni.showToast({
         title: '聊天室未连接',
