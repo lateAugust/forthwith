@@ -28,37 +28,46 @@ export default {
     console.log('App Hide');
   },
   watch: {
-    '$store.state.messages.unreadCount': {
-      handler(data) {
-        if (data > 0) {
-          uni.setTabBarBadge({
-            index: 0,
-            text: data.toString()
-          });
-        } else {
-          uni.removeTabBarBadge({ index: 0 });
-        }
-      },
-      deep: true
+    unreadCount(data) {
+      if (isNaN(data) || !data) {
+        uni.removeTabBarBadge({ index: 0 });
+      } else {
+        uni.setTabBarBadge({
+          index: 0,
+          text: data.toString()
+        });
+      }
     }
   },
   methods: {
     onMessage({ data }) {
       data = JSON.parse(data);
+      console.log(data);
+      const $store = this.$store;
       switch (data.type) {
-        case 'notification':
-          {
-            this.$store.commit('conctacter/setRefreshContactList', true);
-          }
+        case 'RejectConnect': {
+          this.$store.state.websocket.close(); // 关闭连接
           break;
-        case 'message':
+        }
+        case 'NewMessage':
           {
             let key = this.$methods.rankKey([data.send_id, data.receive_id]);
             this.$store.commit('messages/setNewMessagesList', { key, value: data });
             this.$store.commit('messages/setNewMessage', data);
+            if (data.send_id === this.userInfo.id) return;
             this.processMessage(data);
           }
           break;
+        case 'NewApplyNotification': {
+          // 新的申请添加好友通知
+          $store.commit('contacter/setCount', ++$store.state.contacter.count);
+          break;
+        }
+        case 'NewFriendNotification': {
+          // 好友添加通知, 也要在process-apply里调用了
+          this.$store.commit('contacter/setRefreshContactList', true);
+          break;
+        }
       }
     },
     onError() {
@@ -66,11 +75,21 @@ export default {
     },
     onClose() {},
     processMessage(data) {
-      this.$store.commit('messages/setUnreadCount', 1);
-      let index = this.links.findIndex((item) => item.link.receive_id === this.userInfo.id);
+      console.log(data);
+      // this.$store.commit('messages/setUnreadCount', 1);
+      console.log(this.links);
+      let index = this.links.findIndex(
+        (item) =>
+          (item.link.send_id === data.send_id && item.link.receive_id === data.receive_id) ||
+          (item.link.receive_id === data.send_id && item.link.send_id === data.receive_id)
+      );
+      console.log(index, this.links);
       if (index > -1) {
         // 改变links的顺序
-        this.$store.commit('messages/setNewLinksIndex', { data, index });
+        this.$store.commit('messages/setNewLinksIndex', {
+          index,
+          data: { message: data.message, update_at: data.update_at } // , send_id: data.send_id, receive_id: data.receive_id
+        });
       } else {
         // 刷新列表
         this.$store.commit('messages/setRefrechMessagesList', true);

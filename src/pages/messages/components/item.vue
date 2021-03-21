@@ -10,7 +10,8 @@
       <view class="flex align-center">
         <view class="text-cut">{{ link.message }}</view>
         <view class="flex-sub"></view>
-        <view class="cu-tag bg-red sm round" v-if="link.receive_id === userInfo.id && link.unread_count">
+        <!-- link.recevie_id === user.id &&  -->
+        <view class="cu-tag bg-red sm round" v-if="link.unread_count && link.receive_id === $store.state.userInfo.id">
           {{ link.unread_count }}
         </view>
       </view>

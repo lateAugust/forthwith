@@ -18,7 +18,7 @@
           :adjust-position="false"
           type="text"
           v-model="keywords"
-          placeholder="输入手机、昵称"
+          placeholder="输入手机、昵称、用户名"
           confirm-type="search"
           @confirm="handleSearch"
           maxlength="11"
@@ -33,7 +33,7 @@
       <item
         v-for="(bean, index) of list"
         :key="bean.id"
-        :bean="{ user: bean.apply_user }"
+        :bean="{ user: bean.user }"
         @go="
           () => {
             handleGo(bean, index);
@@ -152,8 +152,9 @@ export default {
     handleGo(bean, index) {
       this.index = index;
       this.$store.commit('contacter/setApplyDetail', bean);
+      this.bean = bean;
       uni.navigateTo({
-        url: `/pages/contacter/apply/apply-detail?id=${bean.id}`
+        url: `/pages/contacter/apply/apply-detail?id=${bean.proposer.id}`
       });
     },
     handleSwiperChange() {

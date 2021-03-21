@@ -100,11 +100,12 @@ export default {
     };
   },
   onUnload() {
-    this.$store.commit('messages/setCurrentMessages', null);
+    this.$store.state.websocket.onSend({ link_id: this.linkId }, 'readed');
+    this.$store.commit('messages/setRead', this.linkId);
   },
   onLoad({ receive_id, send_id, type, link_id }) {
     this.$store.commit('messages/setCurrentMessages', this.$methods.rankKey([receive_id, send_id]));
-    // this.$store.commit('messages/setRead', link_id);
+    this.$store.commit('messages/setRead', link_id);
     this.receiveId = +receive_id;
     this.sendId = +send_id;
     this.linkId = +link_id;
@@ -133,8 +134,7 @@ export default {
   watch: {
     '$store.state.messages.newMessage': {
       handler(data) {
-        console.log(data);
-        if (data.type !== 'message') return;
+        if (data.type !== 'NewMessage') return;
         if (data.send_id === this.userInfo.id) {
           this.scrollTop = 1000000000000000000000000;
           this.watchList(false);
@@ -153,6 +153,7 @@ export default {
       this.InputBottom = e.detail.height;
     },
     getList() {
+      console.log(this.$store.state.messages.newMessagesList);
       let message = this.$store.state.messages.newMessagesList[this.rankKey] || [];
       this.list = [...this.oldList.reverse(), ...message];
       // console.log(this.list.map((item) => item.id));

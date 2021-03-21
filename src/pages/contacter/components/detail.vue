@@ -8,7 +8,7 @@
       </view>
       <view class="cu-form-group">
         <view class="title">昵称</view>
-        <view class="content">{{ user.username || '--' }}</view>
+        <view class="content">{{ user.nickname || '--' }}</view>
       </view>
       <view class="cu-form-group">
         <view class="title">年龄</view>

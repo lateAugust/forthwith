@@ -1,16 +1,16 @@
 <template>
   <view>
-    <detail :user="bean.apply_user"></detail>
+    <detail :user="bean.user"></detail>
     <view class="margin-top">
       <view class="cu-form-group align-start">
         <view class="title">附加信息</view>
-        <textarea maxlength="-1" disabled v-model="bean.message" placeholder="--"></textarea>
+        <textarea maxlength="-1" disabled v-model="bean.proposer.message" placeholder="--"></textarea>
       </view>
     </view>
     <doubleButtons
       :leftButton="leftButton"
       :rightButton="rightButton"
-      v-if="bean.apply_status === 'underReview'"
+      v-if="bean.proposer.apply_status === 'underReview'"
       @left="handleRejectShow"
       @right="
         () => {
@@ -18,7 +18,7 @@
         }
       "
     ></doubleButtons>
-    <save v-else-if="bean.apply_status === 'reject'" disabled title="已拒绝"></save>
+    <save v-else-if="bean.proposer.apply_status === 'reject'" disabled title="已拒绝"></save>
     <save v-else title="发消息"></save>
     <modal
       v-model="rejectShow"
@@ -53,7 +53,8 @@ export default {
   data() {
     return {
       bean: {
-        apply_user: {}
+        user: {},
+        proposer: {}
       },
       userInfo: this.$store.state.userInfo,
       leftButton: {

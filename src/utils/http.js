@@ -26,6 +26,7 @@ export default function (url, data, method = 'GET') {
               item.abort();
             }
             tasks = {};
+            store.state.websocket.closeWebsocket();
             uni.showModal({
               title: isLoggedOn ? '登录过期' : '还未登录',
               content: '是否现在去登录',

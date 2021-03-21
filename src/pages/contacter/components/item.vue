@@ -56,6 +56,7 @@ export default {
   },
   computed: {
     user() {
+      console.log(this.bean);
       return this.bean.user;
     },
     friend() {

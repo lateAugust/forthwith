@@ -48,12 +48,12 @@ export default {
     };
   },
   onUnload() {
-    this.$store.commit('messages/setCurrentMessages', null);
+    this.$store.state.websocket.onSend({ link_id: this.linkId }, 'readed');
+    this.$store.commit('messages/setRead', this.linkId);
   },
   onLoad({ receive_id, send_id, type, link_id }) {
-    this.$$store.commit('messages/setCurrentMessages', this.$methods.rankKey([receive_id, send_id]));
-    this.$store.commit('message/setRead', link_id);
-    this.$store.state.websocket.onSend({ link_id: this.linkId }, 'readed');
+    this.$store.commit('messages/setCurrentMessages', this.$methods.rankKey([receive_id, send_id]));
+    this.$store.commit('messages/setRead', link_id);
     this.receiveId = +receive_id;
     this.sendId = +send_id;
     this.linkId = +link_id;
