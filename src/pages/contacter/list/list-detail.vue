@@ -41,6 +41,7 @@ export default {
         friend_id: this.friendId,
         user_id: this.userId
       };
+      console.log(data);
       apiContacter
         .friendsDetail(data)
         .then((res) => {

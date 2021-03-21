@@ -20,7 +20,7 @@ import goLoginMixins from '@/mixins/user/go-login';
 
 import dataList from '@/components/data-list';
 
-import item from '../componet/item';
+import item from '../components/item';
 
 import { mapState } from 'vuex';
 export default {
@@ -45,7 +45,7 @@ export default {
   onShow() {
     this.goLogin();
     if (this.$store.state.messages.refreshMessagesList) {
-      this.$refs.list.getDate(true);
+      this.$refs.list.getData(true);
       this.$store.commit('messages/setRefrechMessagesList');
     }
   },
@@ -54,17 +54,12 @@ export default {
       return this.$store.dispatch('messages/getLinks', data);
     },
     handleGo(item) {
-      let params =
-        'send_id=' +
-        this.userInfo.id +
-        '&receive_id=' +
-        item.user.id +
-        '&link_id=' +
-        item.link.id +
-        '&type=' +
-        item.link.type;
+      let { id } = this.userInfo;
+      let { user, link } = item;
+      let params = 'send_id=' + id + '&receive_id=' + user.id + '&link_id=' + link.id + '&type=' + link.type;
+      let type = link.type === 'NewFriendNotification' ? 'notification' : 'message';
       uni.navigateTo({
-        url: `/pages/messages/window/${item.link.type}?` + params
+        url: `/pages/messages/window/${type}?` + params
       });
     }
   },

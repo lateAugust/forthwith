@@ -50,7 +50,7 @@ export default {
     },
     handleAgree(status = 'agreement') {
       let that = this;
-      let user = that.bean.apply_user;
+      let user = that.bean.user;
       let name = user.nickname || user.username;
       let type = status === 'agreement' ? '同意' : '拒绝';
       let option = {
@@ -78,11 +78,9 @@ export default {
     params() {
       let bean = this.bean;
       return {
-        relation_id: bean.apply_id,
-        contact_user: bean.target_user,
-        relation_user: bean.apply_user,
-        contact_id: bean.target_id,
-        proposers_id: bean.id
+        apply_id: bean.user.id,
+        apply_user: bean.user,
+        proposers_id: bean.proposer.id
       };
     }
   }

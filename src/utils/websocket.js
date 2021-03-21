@@ -32,7 +32,7 @@ export default class {
    * 关闭websocket
    */
   closeWebsocket() {
-    this.socketTask.close();
+    this.socketTask && this.socketTask.close(); // 注意可能在没有socketTask实例是的情况
     this.closed = true;
     this.websocketStatus = false;
   }
@@ -74,6 +74,7 @@ export default class {
    * @param {*} type 事件类型
    */
   onSend(data, type = 'message') {
+    console.log(data);
     if (this.websocketStatus) {
       let obj = { event: type, data };
       this.socketTask.send({ data: this.objectToString(obj) });

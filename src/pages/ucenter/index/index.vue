@@ -90,7 +90,7 @@ export default {
       });
     },
     handleLogin() {
-      uni.navigateTo({
+      uni.reLaunch({
         url: '/pages/ucenter/login/login'
       });
     }
