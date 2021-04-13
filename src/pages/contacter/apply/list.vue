@@ -41,17 +41,12 @@
         "
       >
         <view slot="buttons">
-          <button
-            class="cu-btn bg-blue block margin-bottom-xs"
-            @tap.stop="handleStatus('handleAgree', bean)"
-            v-if="bean.apply_status === 'reject'"
-            disabled
-          >
+          <button class="cu-btn bg-blue block margin-bottom-xs" v-if="bean.apply_status === 'reject'" disabled>
             已拒绝
           </button>
           <button
             class="cu-btn bg-blue block margin-bottom-xs"
-            @tap.stop="handleStatus('handleAgree', bean)"
+            @tap.stop="handleMessage(bean)"
             v-else-if="bean.apply_status === 'agreement'"
           >
             发消息
@@ -134,6 +129,11 @@ export default {
       this.scrollLeft = (index - 1) * 60;
       this.keywords = '';
       this.handleSearch();
+    },
+    handleMessage(bean) {
+      uni.navigateTo({
+        url: `/pages/messages/window/message?receive_id=${bean.user.id}&send_id=${this.$store.state.userInfo.id}`
+      });
     },
     refresh() {
       let refreshList = this.$store.state.contacter.refreshList;

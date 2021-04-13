@@ -19,7 +19,7 @@
       "
     ></doubleButtons>
     <save v-else-if="bean.proposer.apply_status === 'reject'" disabled title="已拒绝"></save>
-    <save v-else title="发消息"></save>
+    <save v-else title="发消息" @save="handleMessage"></save>
     <modal
       v-model="rejectShow"
       :title="'拒绝'"
@@ -85,6 +85,11 @@ export default {
         .finally(() => {
           uni.hideLoading();
         });
+    },
+    handleMessage() {
+      uni.navigateTo({
+        url: `/pages/messages/window/message?receive_id=${this.bean.user.id}&send_id=${this.$store.state.userInfo.id}`
+      });
     },
     success() {
       uni.navigateBack();

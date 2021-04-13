@@ -100,15 +100,16 @@ export default {
     };
   },
   onUnload() {
+    if (!this.linkId) return;
     this.$store.state.websocket.onSend({ link_id: this.linkId }, 'readed');
     this.$store.commit('messages/setRead', this.linkId);
   },
   onLoad({ receive_id, send_id, type, link_id }) {
     this.$store.commit('messages/setCurrentMessages', this.$methods.rankKey([receive_id, send_id]));
-    this.$store.commit('messages/setRead', link_id);
+    if (link_id) this.$store.commit('messages/setRead', link_id);
     this.receiveId = +receive_id;
     this.sendId = +send_id;
-    this.linkId = +link_id;
+    this.linkId = +(link_id || 0);
     this.type = type;
     // let { nickname, username } = this.receiveUser;
     // uni.setNavigationBarTitle({ title: nickname || username });
